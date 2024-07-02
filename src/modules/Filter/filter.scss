@@ -1,5 +1,5 @@
-@use "../varibles" as *;
-@use "../media" as *;
+@use "../../scss/varibles"as *;
+@use "../../scss/media"as *;
 
 .filter {
   &__form {
@@ -70,12 +70,12 @@
     }
   }
 
-  &__radio:focus-visible + &__label {
+  &__radio:focus-visible+&__label {
     outline: 2px solid $orange;
     outline-offset: 5px;
   }
 
-  &__radio:checked + &__label {
+  &__radio:checked+&__label {
     background-color: $light-orange;
   }
 
@@ -131,8 +131,7 @@
     }
   }
 
-  &__type-list {
-  }
+  &__type-list {}
 
   &__type-item {
     margin-bottom: 8px;

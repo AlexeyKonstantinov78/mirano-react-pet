@@ -1,5 +1,5 @@
-@use "../varibles" as *;
-@use "../media" as *;
+@use "../../scss/varibles"as *;
+@use "../../scss/media"as *;
 
 .order {
   position: fixed;
@@ -213,6 +213,7 @@
     &:hover {
       background-color: $orange;
     }
+
     &:focus-visible {
       outline: none;
       border-color: $light-orange;

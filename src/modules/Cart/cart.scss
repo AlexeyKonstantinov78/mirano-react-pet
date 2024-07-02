@@ -1,5 +1,5 @@
-@use "../varibles" as *;
-@use "../media" as *;
+@use "../../scss/varibles"as *;
+@use "../../scss/media"as *;
 
 .cart {
   align-self: start;
@@ -58,8 +58,7 @@
     font-size: 28px;
   }
 
-  &__close {
-  }
+  &__close {}
 
   &__date-delivery {
     padding-left: 20px;
