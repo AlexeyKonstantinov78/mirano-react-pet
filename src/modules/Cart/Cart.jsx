@@ -1,13 +1,13 @@
 import { CartItem } from '../CartItem/CartItem';
-import './cart.scss';
+import _ from './Cart.module.scss';
 
 export const Cart = () => (
-  <section className="cart cart_open">
-    <div className="cart__container">
-      <div className="cart__header">
-        <h3 className="cart__title">Ваш заказ</h3>
+  <section className={_.cart + ' ' + _.cart_open}>
+    <div className={_.cart__container}>
+      <div className={_.cart__header}>
+        <h3 className={_.cart__title}>Ваш заказ</h3>
 
-        <button className="cart__close">
+        <button className={_.cart__close}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <rect x="5" y="5.70715" width="1" height="25"
@@ -18,26 +18,29 @@ export const Cart = () => (
         </button>
       </div>
 
-      <p className="cart__date-delivery">сегодня в 14:00</p>
+      <p className={_.cart__dateDelivery}>сегодня в 14:00</p>
 
-      <ul className="cart__list">
+      <ul className={_.cart__list}>
         <CartItem
+          _={_}
           img={'https://dull-rose-pawpaw.glitch.me/img/39.jpg'}
           title={'Букет из роз Grand Avalanche (101 шт)'}
           price={'14800'} />
         <CartItem
+          _={_}
           img={'https://dull-rose-pawpaw.glitch.me/img/38.jpg'}
           title={'Букет из тюльпан Dolche vita (51 шт)'}
           price={'13400'} />
         <CartItem
+          _={_}
           img={'https://dull-rose-pawpaw.glitch.me/img/41.jpg'}
           title={'Букет из роз Grand Mirabel (101 шт)'}
           price={'63900'} />
       </ul>
 
-      <div className="cart__footer">
-        <button className="cart__order-btn">Оформить</button>
-        <p className="cart__price cart__price_total">0&nbsp;₽</p>
+      <div className={_.cart__footer}>
+        <button className={_.cart__orderBtn}>Оформить</button>
+        <p className={_.cart__price + ' ' + _.cart__price_total}>0&nbsp;₽</p>
       </div>
     </div>
   </section>

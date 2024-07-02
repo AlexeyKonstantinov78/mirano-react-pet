@@ -31,7 +31,7 @@
     margin-bottom: 16px;
   }
 
-  &__social-list {
+  &__socialList {
     display: flex;
     align-content: center;
     justify-content: center;
@@ -40,13 +40,13 @@
 
   &__social {}
 
-  &__developers-title {
+  &__developersTitle {
     margin-bottom: 3px;
   }
 
-  &__developers-list {}
+  &__developersList {}
 
-  &__developers-item {
+  &__developersItem {
     margin-bottom: 3px;
 
     &:last-child {
