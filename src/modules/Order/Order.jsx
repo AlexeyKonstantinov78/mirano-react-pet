@@ -1,7 +1,26 @@
 import _ from './Order.module.scss';
 
-export const Order = () => (
-  <>
+export const Order = () => {
+  const isOrder = false;
+  const isOpen = false;
+
+  if (isOpen) {
+    return null;
+  }
+
+  if (isOrder) {
+    return (
+      <div className={_.order} >
+        <div className={_.order__wrapper}>
+          <h2 className={_.order__title}>Заказ оформлен!</h2>
+          <p className={_.order__id}>Ваш номер заказа:
+            971f365a-caa1-4cdb-9446-bad2eff047e1</p>
+        </div>
+      </div >
+    );
+  }
+
+  return (
     <div className={_.order} style={{ display: "none" }}>
       <div className={_.order__wrapper}>
         <h2 className={_.order__title}>Оформить заказ</h2>
@@ -66,13 +85,5 @@ export const Order = () => (
       </div>
       <button className={_.order__close} type="button">×</button>
     </div>
-
-    <div className={_.order} style={{ display: "none" }}>
-      <div className={_.order__wrapper}>
-        <h2 className={_.order__title}>Заказ оформлен!</h2>
-        <p className={_.order__id}>Ваш номер заказа:
-          971f365a-caa1-4cdb-9446-bad2eff047e1</p>
-      </div>
-    </div >
-  </>
-);
+  );
+}
