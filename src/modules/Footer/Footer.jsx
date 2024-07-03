@@ -50,7 +50,7 @@ export const Footer = () => (
       </address>
 
       <div className={_.footer__developers}>
-        <p className={_.footer__developersTitle}>Проект сделан в учебных целях</p>
+        <p className={_["footer__developers-title"]}>Проект сделан в учебных целях</p>
 
         <ul className={_.footer__developersList}>
           <li className={_.footer__developersItem}>
