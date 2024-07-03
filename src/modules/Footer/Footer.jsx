@@ -36,7 +36,7 @@ export const Footer = () => (
             </a>
           </li>
 
-          <li className={_.footer__socialItem}>
+          <li className={_['footer__social-item']}>
             <a className={_.footer__link} href="#" aria-label="группа в вк">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -52,12 +52,12 @@ export const Footer = () => (
       <div className={_.footer__developers}>
         <p className={_["footer__developers-title"]}>Проект сделан в учебных целях</p>
 
-        <ul className={_.footer__developersList}>
-          <li className={_.footer__developersItem}>
+        <ul className={_["footer__developers-list"]}>
+          <li className={_["footer__developers-item"]}>
             Designer: <a className={_.footer__link} href="Anastasia_Ilina">Anastasia
               Ilina</a>
           </li>
-          <li className="footer__developers-item">
+          <li className={_["footer__developers-item"]}>
             Developer: <a className={_.footer__link} href="maksim_leskin">Makism
               Leskin</a>
           </li>
