@@ -16,6 +16,7 @@ export const Order = () => {
           <p className={_.order__id}>Ваш номер заказа:
             971f365a-caa1-4cdb-9446-bad2eff047e1</p>
         </div>
+        <button className={_.order__close} type="button">×</button>
       </div >
     );
   }
