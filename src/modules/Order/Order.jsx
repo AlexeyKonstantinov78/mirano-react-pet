@@ -4,7 +4,7 @@ export const Order = () => {
   const isOrder = false;
   const isOpen = false;
 
-  if (isOpen) {
+  if (!isOpen) {
     return null;
   }
 
