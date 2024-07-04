@@ -1,8 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
 import _ from './Order.module.scss';
+import { toggleOrder } from '../../store/orderSlice';
 
 export const Order = () => {
+  const dispatch = useDispatch();
+
   const isOrder = false;
-  const isOpen = false;
+  const isOpen = useSelector(state => state.order.isOpen);
+
+  const handlerCloseOrder = (event) => {
+
+    const target = event.target;
+
+    if (!target.closest('.wrapper') || target.closest('.order__close')) {
+      dispatch(toggleOrder());
+    }
+
+  }
 
   if (!isOpen) {
     return null;
@@ -10,20 +24,20 @@ export const Order = () => {
 
   if (isOrder) {
     return (
-      <div className={_.order} >
-        <div className={_.order__wrapper}>
+      <div className={_.order + ' overlay'} >
+        <div className={_.order__wrapper + ' wrapper'}>
           <h2 className={_.order__title}>Заказ оформлен!</h2>
           <p className={_.order__id}>Ваш номер заказа:
             971f365a-caa1-4cdb-9446-bad2eff047e1</p>
         </div>
-        <button className={_.order__close} type="button">×</button>
+        <button className={_.order__close + ' order__close'} type="button">×</button>
       </div >
     );
   }
 
   return (
-    <div className={_.order} style={{ display: "none" }}>
-      <div className={_.order__wrapper}>
+    <div className={_.order + ' overlay'} onClick={handlerCloseOrder}>
+      <div className={_.order__wrapper + ' wrapper'}>
         <h2 className={_.order__title}>Оформить заказ</h2>
         <form className={_.order__form} id="order">
           <fieldset className={_.order__fieldset}>
@@ -84,7 +98,7 @@ export const Order = () => {
             type="submit" form="order">Заказать</button>
         </div>
       </div>
-      <button className={_.order__close} type="button">×</button>
+      <button className={_.order__close + ' order__close'} type="button" >×</button>
     </div>
   );
 }

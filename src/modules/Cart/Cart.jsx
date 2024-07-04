@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem';
 import _ from './Cart.module.scss';
 import { toggleCart } from '../../store/cartSlice';
+import { toggleOrder } from '../../store/orderSlice';
 
 export const Cart = () => {
   const isOpenCart = useSelector(state => state.cart.isOpen);
@@ -10,6 +11,10 @@ export const Cart = () => {
   const handlerCloseCart = () => {
     dispatch(toggleCart());
   };
+
+  const handlerOpenOrder = () => {
+    dispatch(toggleOrder());
+  }
 
   return (isOpenCart &&
     <section className={_.cart + ' ' + _.cart_open}>
@@ -52,7 +57,7 @@ export const Cart = () => {
         </ul>
 
         <div className={_.cart__footer}>
-          <button className={_.cart__orderBtn}>Оформить</button>
+          <button className={_.cart__orderBtn} onClick={handlerOpenOrder}>Оформить</button>
           <p className={_.cart__price + ' ' + _.cart__price_total}>0&nbsp;₽</p>
         </div>
       </div>
