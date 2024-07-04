@@ -1,24 +1,21 @@
-import { useState } from 'react';
+import { toggleChoices } from '../../store/choicesSlice';
 import _ from './Choices.module.scss';
+import { useDispatch } from 'react-redux';
 
-export const Choices = ({ children, btnLabel, className = '' }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Choices = ({ children, btnLabel, className = '', type }) => {
+  const dispatch = useDispatch();
 
-  const handleToggle = () => {
-    setIsOpen((oldIsOpen) => !oldIsOpen);
+  const handleToggle = (type) => {
+    dispatch(toggleChoices(type));
   };
 
   return (
     <div className={_.choices + ' ' + className}>
       <button className={_.choices__btn}
         type="button"
-        onClick={handleToggle}
+        onClick={() => handleToggle(type)}
       >{btnLabel}</button>
-      {isOpen &&
-        <div className={_.choices__box}>
-          {children}
-        </div>
-      }
+      {children}
     </div>
   )
 };
