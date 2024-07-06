@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import _ from './Order.module.scss';
-import { toggleOrder } from '../../store/orderSlice';
+import { closeModal } from '../../store/orderSlice';
 
 export const Order = () => {
   const dispatch = useDispatch();
@@ -8,11 +8,10 @@ export const Order = () => {
   const isOrder = false;
   const isOpen = useSelector(state => state.order.isOpen);
 
-  const handlerCloseOrder = (event) => {
-    const target = event.target;
+  const handlerCloseOrder = ({ target }) => {
 
     if (target.matches(`.${_.order}`) || target.closest(`.${_.order__close}`)) {
-      dispatch(toggleOrder());
+      dispatch(closeModal());
     }
   }
 

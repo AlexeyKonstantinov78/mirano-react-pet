@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem';
 import _ from './Cart.module.scss';
 import { toggleCart } from '../../store/cartSlice';
-import { toggleOrder } from '../../store/orderSlice';
+import { openModal } from '../../store/orderSlice';
 
 export const Cart = () => {
   const isOpenCart = useSelector(state => state.cart.isOpen);
@@ -13,7 +13,7 @@ export const Cart = () => {
   };
 
   const handlerOpenOrder = () => {
-    dispatch(toggleOrder());
+    dispatch(openModal());
   }
 
   return (isOpenCart &&

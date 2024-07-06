@@ -8,12 +8,18 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
+    openModal(state) {
+      state.isOpen = true;
+    },
+    closeModal(state) {
+      state.isOpen = false;
+    },
     toggleOrder(state) {
       state.isOpen = !state.isOpen;
     },
   },
 });
 
-export const { toggleOrder } = orderSlice.actions;
+export const { toggleOrder, openModal, closeModal } = orderSlice.actions;
 
 export default orderSlice.reducer;
