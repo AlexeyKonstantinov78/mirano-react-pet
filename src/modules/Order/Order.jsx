@@ -8,11 +8,11 @@ export const Order = () => {
   const isOrder = false;
   const isOpen = useSelector(state => state.order.isOpen);
 
-  const handlerCloseOrder = ({ target }) => {
+  const handlerCloseOrder = () => {
 
-    if (target.matches(`.${_.order}`) || target.closest(`.${_.order__close}`)) {
-      dispatch(closeModal());
-    }
+    // if (target.matches(`.${_.order}`) || target.closest(`.${_.order__close}`)) {
+    dispatch(closeModal());
+    // }
   }
 
   if (!isOpen) {
@@ -21,7 +21,7 @@ export const Order = () => {
 
   return (
     <div className={_.order} onClick={handlerCloseOrder}>
-      <div className={_.order__wrapper}>
+      <div className={_.order__wrapper} onClick={(e) => { e.stopPropagation() }}>
         {isOrder ?
           <>
             <h2 className={_.order__title}>Заказ оформлен!</h2>
