@@ -5,7 +5,7 @@ import { closeModal } from '../../store/orderSlice';
 export const Order = () => {
   const dispatch = useDispatch();
 
-  const isOrder = false;
+  const isOrderReady = false;
   const isOpen = useSelector(state => state.order.isOpen);
 
   const handlerCloseOrder = () => {
@@ -22,7 +22,7 @@ export const Order = () => {
   return (
     <div className={_.order} onClick={handlerCloseOrder}>
       <div className={_.order__wrapper} onClick={(e) => { e.stopPropagation() }}>
-        {isOrder ?
+        {isOrderReady ?
           <>
             <h2 className={_.order__title}>Заказ оформлен!</h2>
             <p className={_.order__id}>Ваш номер заказа:
