@@ -1,21 +1,15 @@
-import { toggleChoices } from '../../store/choicesSlice';
 import _ from './Choices.module.scss';
-import { useDispatch } from 'react-redux';
 
-export const Choices = ({ children, btnLabel, className = '', type }) => {
-  const dispatch = useDispatch();
+export const Choices = ({ children, btnLabel, className = '', isOpen, onToggle }) => {
 
-  const handleToggle = (type) => {
-    dispatch(toggleChoices(type));
-  };
 
   return (
     <div className={_.choices + ' ' + className}>
       <button className={_.choices__btn}
         type="button"
-        onClick={() => handleToggle(type)}
+        onClick={onToggle}
       >{btnLabel}</button>
-      {children}
+      {isOpen && <>{children}</>}
     </div>
   )
 };
