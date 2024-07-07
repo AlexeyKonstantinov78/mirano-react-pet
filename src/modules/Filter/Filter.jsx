@@ -1,13 +1,22 @@
 import _ from './Filter.module.scss';
 import { Choices } from '../Choices/Choices';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchGoods } from '../../store/goodsSlice';
 
 export const Filter = () => {
+  const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
 
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
   };
+
+  const fetchType = ({ target }) => {
+    // console.log('target: ', target.value);
+    // console.log(target.labels[0].textContent);
+    dispatch(fetchGoods({ type: target.value, name: target.labels[0].textContent }));
+  }
 
   return (
     <section className={_.filter}>
@@ -21,7 +30,8 @@ export const Filter = () => {
               name='type'
               value='bouquets'
               id='flower'
-              defaultChecked
+              // defaultChecked
+              onClick={fetchType}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_flower}
@@ -35,6 +45,7 @@ export const Filter = () => {
               name='type'
               value='toys'
               id='toys'
+              onClick={fetchType}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_toys}
@@ -48,6 +59,7 @@ export const Filter = () => {
               name='type'
               value='postcards'
               id='postcard'
+              onClick={fetchType}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_postcard}

@@ -5,13 +5,17 @@ const initialState = {
   items: [],
   status: 'idle',
   error: null,
+  name: '',
 };
 
 export const fetchGoods = createAsyncThunk(
   'goods/featchGoods',
   async (params) => {
 
-    const response = await fetch(`${API_URL_RENDER}${params}`);
+    const queryString = new URLSearchParams(params).toString();
+    console.log('queryString: ', queryString);
+
+    const response = await fetch(`${API_URL_RENDER}/api/products${queryString ? `?${queryString}` : ''}`);
 
     return await response.json();
   }
@@ -30,6 +34,11 @@ const goodsSlice = createSlice({
       .addCase(fetchGoods.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
+        if (action.meta.arg) {
+          state.name = action.meta.arg.name;
+        } else {
+          state.name = "Все товары";
+        }
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = 'failed';

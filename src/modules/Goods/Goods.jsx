@@ -12,11 +12,12 @@ export const Goods = () => {
   const {
     items: goods,
     status: goodsStatus,
-    error } = useSelector(state => state.goods);
+    error,
+    name } = useSelector(state => state.goods);
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
-      dispatch(fetchGoods('/api/products'));
+      dispatch(fetchGoods());
     }
   }, [goodsStatus, dispatch]);
 
@@ -34,7 +35,7 @@ export const Goods = () => {
     <section className={_.goods}>
       <div className={`container ${_.goods__container}`}>
         <div className={_.goods__box}>
-          <h2 className={_.goods__title}>Цветы</h2>
+          <h2 className={_.goods__title}>{name}</h2>
           {content}
 
           <ul className={_.goods__list}>
