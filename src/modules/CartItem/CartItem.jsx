@@ -1,6 +1,6 @@
 import _ from './CartItem.module.scss';
 
-export const CartItem = ({ img, title, price }) => (
+export const CartItem = ({ img, title, price, count }) => (
   <li className={_.cart__item}>
     <img className={_.cart__img}
       src={img}
@@ -9,7 +9,7 @@ export const CartItem = ({ img, title, price }) => (
     <div className={_.cart__counter}><button
       className={_["cart__counter-btn"]}>-</button><input
         className={_["cart__counter-input"]} type="number" max="99" min="0"
-        value="1" /><button className={_["cart__counter-btn"]}>+</button></div>
+        value={count} /><button className={_["cart__counter-btn"]}>+</button></div>
     <p className={_.cart__price}>{price}&nbsp;₽</p>
   </li>
 );
