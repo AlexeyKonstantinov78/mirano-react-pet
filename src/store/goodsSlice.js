@@ -13,7 +13,6 @@ export const fetchGoods = createAsyncThunk(
   async (params) => {
 
     const queryString = new URLSearchParams(params).toString();
-    console.log('queryString: ', queryString);
 
     const response = await fetch(`${API_URL_RENDER}/api/products${queryString ? `?${queryString}` : ''}`);
 
