@@ -10,7 +10,6 @@ const initialState = {
 export const fetchGoods = createAsyncThunk(
   'goods/featchGoods',
   async (params) => {
-    console.log('params: ', params);
 
     const response = await fetch(`${API_URL_RENDER}${params}`);
 

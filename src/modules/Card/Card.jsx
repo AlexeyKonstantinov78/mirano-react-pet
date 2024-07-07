@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import _ from './Card.module.scss';
 import { addItemToCart } from '../../store/cartSlice';
+import { useState } from 'react';
 
 export const Card = ({
   className = '',
@@ -11,6 +12,8 @@ export const Card = ({
   price,
 }) => {
   const dispatch = useDispatch();
+
+  const [hover, setHover] = useState(true);
 
   const handlerAddToCart = () => {
     dispatch(addItemToCart({
@@ -29,7 +32,13 @@ export const Card = ({
         <h3 className={_.card__title}>{title}</h3>
         <div className={_.card__footer}>
           <p className={_.card__dateDelivery}>{dateDelivery}</p>
-          <button className={_.card__button} onClick={handlerAddToCart}>{price}&nbsp;₽</button>
+          <button className={_.card__button}
+            onClick={handlerAddToCart}
+            onMouseEnter={() => { setHover(false) }}
+            onMouseLeave={() => { setHover(true) }}
+          >
+            {hover ? <>{price}&nbsp;₽</> : <>В корзину</>}
+          </button>
         </div>
       </div>
     </article>
