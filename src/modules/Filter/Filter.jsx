@@ -35,7 +35,7 @@ export const Filter = () => {
     const validFilters = getValidFilters(filters);
 
     dispatch(fetchGoods(validFilters));
-  });
+  }, [dispatch, filters]);
 
 
   return (
