@@ -33,7 +33,8 @@ const goodsSlice = createSlice({
       .addCase(fetchGoods.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
-        if (action.meta.arg) {
+        console.log('action.meta.arg', action.meta.arg);
+        if (action.meta.arg.name) {
           state.name = action.meta.arg.name;
         } else {
           state.name = "Все товары";

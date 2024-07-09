@@ -1,8 +1,10 @@
 import _ from './Filter.module.scss';
 import { Choices } from '../Choices/Choices';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
+import { getValidFilters } from '../../utils';
+
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -12,11 +14,29 @@ export const Filter = () => {
     setOpenChoice(openChoice === index ? null : index);
   };
 
-  const fetchType = ({ target }) => {
-    // console.log('target: ', target.value);
-    // console.log(target.labels[0].textContent);
-    dispatch(fetchGoods({ type: target.value, name: target.labels[0].textContent }));
+  const [filters, setFilters] = useState({
+    type: '',
+    minPrice: '',
+    maxPrice: '',
+    category: '',
+    name: '',
+  });
+
+  const handleTypeChange = ({ target }) => {
+    const { value, name } = target;
+    const title = target.labels[0].textContent;
+
+    const newFilters = { ...filters, [name]: value, name: title };
+
+    setFilters(newFilters);
   }
+
+  useEffect(() => {
+    const validFilters = getValidFilters(filters);
+
+    dispatch(fetchGoods(validFilters));
+  });
+
 
   return (
     <section className={_.filter}>
@@ -30,8 +50,8 @@ export const Filter = () => {
               name='type'
               value='bouquets'
               id='flower'
-              // defaultChecked
-              onClick={fetchType}
+              checked={filters.type === 'bouquets'}
+              onChange={handleTypeChange}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_flower}
@@ -45,7 +65,8 @@ export const Filter = () => {
               name='type'
               value='toys'
               id='toys'
-              onClick={fetchType}
+              checked={filters.type === 'toys'}
+              onChange={handleTypeChange}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_toys}
@@ -59,7 +80,8 @@ export const Filter = () => {
               name='type'
               value='postcards'
               id='postcard'
-              onClick={fetchType}
+              checked={filters.type === 'postcard'}
+              onChange={handleTypeChange}
             />
             <label
               className={_.filter__label + ' ' + _.filter__label_postcard}
