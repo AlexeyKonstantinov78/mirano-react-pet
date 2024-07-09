@@ -3,11 +3,20 @@ import { CartItem } from '../CartItem/CartItem';
 import _ from './Cart.module.scss';
 import { toggleCart } from '../../store/cartSlice';
 import { openModal } from '../../store/orderSlice';
+import { useEffect, useRef } from 'react';
 
 export const Cart = () => {
   const dispatch = useDispatch();
   const isOpenCart = useSelector((state) => state.cart.isOpen);
   const items = useSelector((state) => state.cart.items);
+
+  const cartRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpenCart) {
+      cartRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isOpenCart]);
 
   const handlerCloseCart = () => {
     dispatch(toggleCart());
@@ -17,9 +26,11 @@ export const Cart = () => {
     dispatch(openModal());
   };
 
+
+
   return (
     isOpenCart && (
-      <section className={_.cart + ' ' + _.cart_open}>
+      <section className={_.cart + ' ' + _.cart_open} ref={cartRef}>
         <div className={_.cart__container}>
           <div className={_.cart__header}>
             <h3 className={_.cart__title}>Ваш заказ</h3>
