@@ -26,13 +26,12 @@ export const Filter = () => {
   const debounceFetchGoods = useRef(
     debounce((filters) => {
       dispatch(fetchGoods(filters));
-    }, 1000)).current;
+    }, 300)).current;
 
   useEffect(() => {
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
     if (prevFilters.type !== filters.type) {
-
       dispatch(fetchGoods(validFilters));
     } else {
       debounceFetchGoods(validFilters);
@@ -54,7 +53,7 @@ export const Filter = () => {
     const { value, name } = target;
     const title = `Фильтр по цене`;
 
-    const newFilters = { ...filters, [name]: value ? parseInt(value) : '', name: title };
+    const newFilters = { ...filters, [name]: !isNaN(parseInt(value)) ? value : '', name: title };
     if (newFilters.type) {
       setFilters(newFilters);
     }
