@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
 import { getValidFilters } from '../../utils';
 
-
 export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
@@ -25,10 +24,21 @@ export const Filter = () => {
   const handleTypeChange = ({ target }) => {
     const { value, name } = target;
     const title = target.labels[0].textContent;
-
-    const newFilters = { ...filters, [name]: value, name: title };
-
+    const newFilters = {
+      ...filters, [name]: value, name: title, minPrice: '', maxPrice: ''
+    };
     setFilters(newFilters);
+    setOpenChoice(-1);
+  }
+
+  const handlePriceChange = ({ target }) => {
+    const { value, name } = target;
+    const title = `Фильтр по цене`;
+
+    const newFilters = { ...filters, [name]: value ? parseInt(value) : '', name: title };
+    if (newFilters.type) {
+      setFilters(newFilters);
+    }
   }
 
   useEffect(() => {
@@ -103,12 +113,16 @@ export const Filter = () => {
                     type='text'
                     name='minPrice'
                     placeholder='от'
+                    value={filters.minPrice}
+                    onChange={handlePriceChange}
                   />
                   <input
                     className={_.filter__inputPrice}
                     type='text'
                     name='maxPrice'
                     placeholder='до'
+                    value={filters.maxPrice}
+                    onChange={handlePriceChange}
                   />
                 </fieldset>
               </div>
