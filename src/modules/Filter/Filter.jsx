@@ -1,9 +1,9 @@
 import _ from './Filter.module.scss';
 import { Choices } from '../Choices/Choices';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
-import { getValidFilters } from '../../utils';
+import { debounce, getValidFilters } from '../../utils';
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,25 @@ export const Filter = () => {
     category: '',
     name: '',
   });
+
+  const prevFiltersRef = useRef(filters);
+
+  const debounceFetchGoods = useRef(
+    debounce((filters) => {
+      dispatch(fetchGoods(filters));
+    }, 1000)).current;
+
+  useEffect(() => {
+    const prevFilters = prevFiltersRef.current;
+    const validFilters = getValidFilters(filters);
+    if (prevFilters.type !== filters.type) {
+
+      dispatch(fetchGoods(validFilters));
+    } else {
+      debounceFetchGoods(validFilters);
+    }
+    prevFiltersRef.current = filters;
+  }, [dispatch, debounceFetchGoods, filters]);
 
   const handleTypeChange = ({ target }) => {
     const { value, name } = target;
@@ -40,13 +59,6 @@ export const Filter = () => {
       setFilters(newFilters);
     }
   }
-
-  useEffect(() => {
-    const validFilters = getValidFilters(filters);
-
-    dispatch(fetchGoods(validFilters));
-  }, [dispatch, filters]);
-
 
   return (
     <section className={_.filter}>
@@ -90,7 +102,7 @@ export const Filter = () => {
               name='type'
               value='postcards'
               id='postcard'
-              checked={filters.type === 'postcard'}
+              checked={filters.type === 'postcards'}
               onChange={handleTypeChange}
             />
             <label
