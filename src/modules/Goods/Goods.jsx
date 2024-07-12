@@ -16,11 +16,15 @@ export const Goods = () => {
   let content = null;
 
   if (goodsStatus === 'loading') {
-    content = <p>Loading</p>
+    content = <center>Loading</center>
   }
 
   if (goodsStatus === 'failed') {
-    content = <p>{error}</p>
+    content = <center>{error}</center>
+  }
+
+  if (goods.length === 0 && goodsStatus === 'success') {
+    content = <center>По запросу ничего нет</center>
   }
 
   return (

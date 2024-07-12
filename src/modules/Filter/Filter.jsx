@@ -1,9 +1,10 @@
 import _ from './Filter.module.scss';
 import { Choices } from '../Choices/Choices';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
 import { debounce, getValidFilters } from '../../utils';
+import { setFiltersSlice } from '../../store/filterSlice';
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -13,13 +14,7 @@ export const Filter = () => {
     setOpenChoice(openChoice === index ? null : index);
   };
 
-  const [filters, setFilters] = useState({
-    type: '',
-    minPrice: '',
-    maxPrice: '',
-    category: '',
-    name: '',
-  });
+  const filters = useSelector(state => state.filter);
 
   const prevFiltersRef = useRef(filters);
 
@@ -45,7 +40,7 @@ export const Filter = () => {
     const newFilters = {
       ...filters, [name]: value, name: title, minPrice: '', maxPrice: ''
     };
-    setFilters(newFilters);
+    dispatch(setFiltersSlice(newFilters));
     setOpenChoice(-1);
   }
 
@@ -55,7 +50,7 @@ export const Filter = () => {
 
     const newFilters = { ...filters, [name]: !isNaN(parseInt(value)) ? value : '', name: title };
     if (newFilters.type) {
-      setFilters(newFilters);
+      dispatch(setFiltersSlice(newFilters));
     }
   }
 
