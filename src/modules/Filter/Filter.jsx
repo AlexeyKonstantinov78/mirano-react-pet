@@ -5,6 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
 import { debounce, getValidFilters } from '../../utils';
 import { setFiltersSlice } from '../../store/filterSlice';
+import { FilterRadio } from './FilterRadio/FilterRadio';
+
+const filterTypes = [
+  { value: 'bouquets', title: 'Цветы' },
+  { value: 'toys', title: 'Игрушки' },
+  { value: 'postcards', title: 'Открытки' },
+];
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -60,50 +67,14 @@ export const Filter = () => {
       <div className='container'>
         <form className={_.filter__form}>
           <fieldset className={_.filter__group}>
-            <input
-              className={_.filter__radio}
-              type='radio'
-              name='type'
-              value='bouquets'
-              id='flower'
-              checked={filters.type === 'bouquets'}
-              onChange={handleTypeChange}
-            />
-            <label
-              className={_.filter__label + ' ' + _.filter__label_flower}
-              htmlFor='flower'>
-              Цветы
-            </label>
-
-            <input
-              className={_.filter__radio}
-              type='radio'
-              name='type'
-              value='toys'
-              id='toys'
-              checked={filters.type === 'toys'}
-              onChange={handleTypeChange}
-            />
-            <label
-              className={_.filter__label + ' ' + _.filter__label_toys}
-              htmlFor='toys'>
-              Игрушки
-            </label>
-
-            <input
-              className={_.filter__radio}
-              type='radio'
-              name='type'
-              value='postcards'
-              id='postcard'
-              checked={filters.type === 'postcards'}
-              onChange={handleTypeChange}
-            />
-            <label
-              className={_.filter__label + ' ' + _.filter__label_postcard}
-              htmlFor='postcard'>
-              Открытки
-            </label>
+            {filterTypes.map((item) => (
+              <FilterRadio
+                key={item.value}
+                handleTypeChange={handleTypeChange}
+                data={item}
+                _={_}
+              />
+            ))}
           </fieldset>
 
           <fieldset className={_.filter__group + ' ' + _.filter__group_choices}>

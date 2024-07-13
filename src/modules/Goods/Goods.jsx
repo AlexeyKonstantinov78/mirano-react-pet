@@ -1,5 +1,4 @@
 import _ from './Goods.module.scss';
-
 import { Card } from '../Card/Card';
 import { Cart } from '../Cart/Cart';
 import { useSelector } from 'react-redux';
