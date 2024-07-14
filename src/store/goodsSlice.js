@@ -6,6 +6,7 @@ const initialState = {
   status: 'idle',
   error: null,
   name: '',
+  content: null,
 };
 
 export const fetchGoods = createAsyncThunk(
@@ -29,20 +30,30 @@ const goodsSlice = createSlice({
       .addCase(fetchGoods.pending, (state) => {
         state.status = 'loading';
         state.error = null;
+        state.content = 'loading';
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
         state.status = 'success';
         state.items = action.payload;
+
+        if (state.items.length === 0) {
+          state.content = 'По запросу ничего нет';
+        } else {
+          state.content = null;
+        }
 
         if (action.meta.arg.name) {
           state.name = action.meta.arg.name;
         } else {
           state.name = "Все товары";
         }
+
+
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        state.content = action.error.message;
       });
   },
 });

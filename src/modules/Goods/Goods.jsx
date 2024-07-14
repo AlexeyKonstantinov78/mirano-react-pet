@@ -8,30 +8,16 @@ export const Goods = () => {
 
   const {
     items: goods,
-    status: goodsStatus,
-    error,
-    name } = useSelector(state => state.goods);
-
-  let content = null;
-
-  if (goodsStatus === 'loading') {
-    content = <center>Loading</center>
-  }
-
-  if (goodsStatus === 'failed') {
-    content = <center>{error}</center>
-  }
-
-  if (goods.length === 0 && goodsStatus === 'success') {
-    content = <center>По запросу ничего нет</center>
-  }
+    name,
+    content
+  } = useSelector(state => state.goods);
 
   return (
     <section className={_.goods}>
       <div className={`container ${_.goods__container}`}>
         <div className={_.goods__box}>
           <h2 className={_.goods__title}>{name}</h2>
-          {content}
+          {content && (<center>{content}</center>)}
 
           <ul className={_.goods__list}>
             {goods.map((item) => (
