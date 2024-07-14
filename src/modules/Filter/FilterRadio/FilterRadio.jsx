@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 export const FilterRadio = ({ handleTypeChange, data, _ }) => {
-  const filters = useSelector(state => state.filter);
+  const filters = useSelector(state => state.filters);
 
   return (
     <>

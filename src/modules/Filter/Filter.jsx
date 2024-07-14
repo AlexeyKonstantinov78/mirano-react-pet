@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
 import { debounce, getValidFilters } from '../../utils';
-import { setFiltersSlice } from '../../store/filterSlice';
+import { changePrice, changeType } from '../../store/filtersSlice';
 import { FilterRadio } from './FilterRadio/FilterRadio';
 
 const filterTypes = [
@@ -16,8 +16,10 @@ const filterTypes = [
 export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
-  const filters = useSelector(state => state.filter);
+  const filters = useSelector(state => state.filters);
+
   const prevFiltersRef = useRef(filters);
+
   const debounceFetchGoods = useRef(
     debounce((filters) => {
       dispatch(fetchGoods(filters));
@@ -42,20 +44,17 @@ export const Filter = () => {
   const handleTypeChange = ({ target }) => {
     const { value, name } = target;
     const title = target.labels[0].textContent;
-    const newFilters = {
-      ...filters, [name]: value, name: title, minPrice: '', maxPrice: ''
-    };
-    dispatch(setFiltersSlice(newFilters));
+
+    dispatch(changeType({ [name]: value, name: title }));
     setOpenChoice(-1);
   }
 
   const handlePriceChange = ({ target }) => {
     const { value, name } = target;
-    const title = `Фильтр по цене`;
+    // const newFilters = { ...filters, [name]: !isNaN(parseInt(value)) ? value : '', name: title };
 
-    const newFilters = { ...filters, [name]: !isNaN(parseInt(value)) ? value : '', name: title };
-    if (newFilters.type) {
-      dispatch(setFiltersSlice(newFilters));
+    if (filters.type) {
+      dispatch(changePrice({ name, value: !isNaN(parseInt(value)) ? value : '' }));
     }
   }
 
