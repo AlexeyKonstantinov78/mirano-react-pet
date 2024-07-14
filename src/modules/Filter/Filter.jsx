@@ -16,15 +16,8 @@ const filterTypes = [
 export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
-
-  const handleChoicesToggle = (index) => {
-    setOpenChoice(openChoice === index ? null : index);
-  };
-
   const filters = useSelector(state => state.filter);
-
   const prevFiltersRef = useRef(filters);
-
   const debounceFetchGoods = useRef(
     debounce((filters) => {
       dispatch(fetchGoods(filters));
@@ -40,6 +33,11 @@ export const Filter = () => {
     }
     prevFiltersRef.current = filters;
   }, [dispatch, debounceFetchGoods, filters]);
+
+  //handle
+  const handleChoicesToggle = (index) => {
+    setOpenChoice(openChoice === index ? null : index);
+  };
 
   const handleTypeChange = ({ target }) => {
     const { value, name } = target;
