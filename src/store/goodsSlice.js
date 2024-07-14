@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API_URL_RENDER } from '../const';
+import { API_URL_RENDER, FAILED, LOADING, SUCCESS } from '../const';
 
 const initialState = {
   items: [],
@@ -28,12 +28,12 @@ const goodsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoods.pending, (state) => {
-        state.status = 'loading';
+        state.status = LOADING;
         state.error = null;
-        state.content = 'loading';
+        state.content = state.status;
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = SUCCESS;
         state.items = action.payload;
 
         if (state.items.length === 0) {
@@ -51,7 +51,7 @@ const goodsSlice = createSlice({
 
       })
       .addCase(fetchGoods.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = FAILED;
         state.error = action.error.message;
         state.content = action.error.message;
       });

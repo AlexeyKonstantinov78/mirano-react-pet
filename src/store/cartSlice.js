@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL_RENDER, KEY_LOCAL_STORAGE } from '../const';
+import { API_URL_RENDER, FAILED, KEY_LOCAL_STORAGE, LOADING, SUCCESS } from '../const';
 
 const initialState = {
   isOpen: false,
@@ -60,15 +60,15 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerCart.pending, (state) => {
-        state.status = 'loading',
+        state.status = LOADING,
           state.error = null;
       })
       .addCase(registerCart.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = SUCCESS;
         state.accessKey = action.payload.accessKey;
       })
       .addCase(registerCart.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = FAILED;
         state.accessKey = '';
         state.error = action.error.message;
       });
