@@ -30,21 +30,17 @@ export const Filter = () => {
   useEffect(() => {
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
-    if (prevFilters.type !== filters.type) {
-      if (!filters.isSearch) {
-        dispatch(fetchGoods(validFilters));
-      }
+    if (prevFilters.type !== filters.type && !filters.isSearch) {
+      dispatch(fetchGoods(validFilters));
     } else {
       debounceFetchGoods(validFilters);
     }
     prevFiltersRef.current = filters;
-  }, [dispatch, debounceFetchGoods, filters]);
 
-  useEffect(() => {
     if (filters.isSearch) {
       setOpenChoice(-1);
     }
-  }, [filters]);
+  }, [dispatch, debounceFetchGoods, filters]);
 
   //handle
   const handleChoicesToggle = (index) => {
