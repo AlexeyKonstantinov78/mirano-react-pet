@@ -22,19 +22,29 @@ export const Filter = () => {
 
   const debounceFetchGoods = useRef(
     debounce((filters) => {
-      dispatch(fetchGoods(filters));
+      if (!filters.isSearch) {
+        dispatch(fetchGoods(filters));
+      }
     }, 300)).current;
 
   useEffect(() => {
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
     if (prevFilters.type !== filters.type) {
-      dispatch(fetchGoods(validFilters));
+      if (!filters.isSearch) {
+        dispatch(fetchGoods(validFilters));
+      }
     } else {
       debounceFetchGoods(validFilters);
     }
     prevFiltersRef.current = filters;
   }, [dispatch, debounceFetchGoods, filters]);
+
+  useEffect(() => {
+    if (filters.isSearch) {
+      setOpenChoice(-1);
+    }
+  }, [filters]);
 
   //handle
   const handleChoicesToggle = (index) => {
