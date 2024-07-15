@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API_URL_RENDER, FAILED, LOADING, SUCCESS } from '../const';
+import { API_URL_RENDER, FAILED, LOADING, SUCCESS, TEXT_ERROR } from '../const';
 
 const initialState = {
   items: [],
@@ -16,6 +16,10 @@ export const fetchGoods = createAsyncThunk(
     const queryString = new URLSearchParams(params).toString();
 
     const response = await fetch(`${API_URL_RENDER}/api/products${queryString ? `?${queryString}` : ''}`);
+
+    if (!response.ok) {
+      throw new Error(TEXT_ERROR);
+    }
 
     return await response.json();
   }

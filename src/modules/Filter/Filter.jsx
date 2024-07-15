@@ -60,7 +60,6 @@ export const Filter = () => {
     // const newFilters = { ...filters, [name]: !isNaN(parseInt(value)) ? value : '', name: title };
 
     if (filters.type) {
-      // dispatch(changePrice({ name, value: !isNaN(parseInt(value)) ? parseInt(value) : '' }));
       dispatch(changePrice({ name, value }));
     }
   }

@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL_RENDER, FAILED, KEY_LOCAL_STORAGE, LOADING, SUCCESS } from '../const';
+import { API_URL_RENDER, FAILED, KEY_LOCAL_STORAGE, LOADING, SUCCESS, TEXT_ERROR } from '../const';
 
 const initialState = {
   isOpen: false,
-  items: JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE) || '[]'),
+  // items: JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE) || '[]'),
+  items: [],
   status: 'idle',
   accessKey: null,
   error: null,
@@ -13,15 +14,35 @@ export const registerCart = createAsyncThunk(
   'cart/registerCart',
   async () => {
     const response = await fetch(`${API_URL_RENDER}/api/cart/register`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      method: "POST",
+      credentials: "include",
     });
+
+    if (!response.ok) {
+      throw new Error(TEXT_ERROR);
+    }
 
     return await response.json();
   });
+
+export const fetchCart = createAsyncThunk(
+  'cart/fetchCart',
+  async (_, { getState }) => {
+    const accessKey = getState().cart.accessKey;
+    console.log(accessKey);
+
+    const response = await fetch(`${API_URL_RENDER}/api/cart`, {
+      method: 'GET',
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(TEXT_ERROR);
+    }
+
+    return await response.json();
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -60,8 +81,8 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerCart.pending, (state) => {
-        state.status = LOADING,
-          state.error = null;
+        state.status = LOADING;
+        state.error = null;
       })
       .addCase(registerCart.fulfilled, (state, action) => {
         state.status = SUCCESS;
@@ -70,6 +91,19 @@ const cartSlice = createSlice({
       .addCase(registerCart.rejected, (state, action) => {
         state.status = FAILED;
         state.accessKey = '';
+        state.error = action.error.message;
+      })
+      .addCase(fetchCart.pending, (state) => {
+        state.status = LOADING;
+        state.error = null;
+      })
+      .addCase(fetchCart.fulfilled, (state, action) => {
+        console.log('action: ', action);
+        state.status = SUCCESS;
+        state.items = action.payload;
+      })
+      .addCase(fetchCart.rejected, (state, action) => {
+        state.status = FAILED;
         state.error = action.error.message;
       });
   },

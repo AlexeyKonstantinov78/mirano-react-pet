@@ -8,3 +8,5 @@ export const FAILED = 'failed';
 
 export const TITLE_FILTER_PRICES = `Фильтр по цене`;
 export const TITLE_SEARCH = 'Поиск';
+
+export const TEXT_ERROR = 'Не удалось получить данные';

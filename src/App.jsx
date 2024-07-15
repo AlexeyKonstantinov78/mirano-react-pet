@@ -7,13 +7,14 @@ import { Hero } from './modules/Hero/Hero';
 import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
 import { useDispatch } from 'react-redux';
-import { registerCart } from './store/cartSlice';
+import { fetchCart, registerCart } from './store/cartSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const initializeCart = async () => {
       await dispatch(registerCart());
+      await dispatch(fetchCart());
     };
 
     initializeCart();
