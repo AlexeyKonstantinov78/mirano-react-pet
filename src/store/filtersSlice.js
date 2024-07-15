@@ -23,7 +23,7 @@ const filtersSlice = createSlice({
       state.isSearch = false;
     },
     changePrice(state, action) {
-      state[action.payload.name] = action.payload.value;
+      state[action.payload.name] = !isNaN(parseInt(action.payload.value)) ? parseInt(action.payload.value) : '';
       state.name = TITLE_FILTER_PRICES;
       state.isSearch = false;
     },
