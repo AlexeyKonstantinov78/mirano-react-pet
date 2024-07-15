@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL_RENDER, FAILED, KEY_LOCAL_STORAGE, LOADING, SUCCESS, TEXT_ERROR } from '../const';
+import { API_URL_RENDER, FAILED, LOADING, SUCCESS, TEXT_ERROR, TEXT_ERROR_OUTPUT_ITEMS } from '../const';
 
 const initialState = {
   isOpen: false,
@@ -28,8 +28,8 @@ export const registerCart = createAsyncThunk(
 export const fetchCart = createAsyncThunk(
   'cart/fetchCart',
   async (_, { getState }) => {
-    const accessKey = getState().cart.accessKey;
-    console.log(accessKey);
+    // const accessKey = getState().cart.accessKey;
+    // console.log(accessKey);
 
     const response = await fetch(`${API_URL_RENDER}/api/cart`, {
       method: 'GET',
@@ -44,6 +44,27 @@ export const fetchCart = createAsyncThunk(
   }
 );
 
+export const addItemToCart = createAsyncThunk(
+  'cart/addItemToCart',
+  async ({ productId, quantity }) => {
+
+    const response = await fetch(`${API_URL_RENDER}/api/cart/items`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productId, quantity })
+    });
+
+    if (!response.ok) {
+      throw new Error(TEXT_ERROR_OUTPUT_ITEMS);
+    }
+    return await response.json();
+  }
+);
+
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -51,32 +72,6 @@ const cartSlice = createSlice({
     toggleCart(state) {
       state.isOpen = !state.isOpen;
     },
-    addItemToCart(state, action) {
-      const {
-        id,
-        img,
-        title,
-        dateDelivery,
-        price,
-        count = 1
-      } = action.payload;
-
-      const exisistingItem = state.items.find(item => item.id === id);
-      if (exisistingItem) {
-        exisistingItem.count += count;
-      } else {
-        state.items.push({
-          id,
-          img,
-          title,
-          dateDelivery,
-          price,
-          count
-        });
-      }
-
-      localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(state.items));
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -98,18 +93,29 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
-        console.log('action: ', action);
         state.status = SUCCESS;
         state.items = action.payload;
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = FAILED;
         state.error = action.error.message;
+      })
+      .addCase(addItemToCart.pending, (state) => {
+        state.status = LOADING;
+        state.error = null;
+      })
+      .addCase(addItemToCart.fulfilled, (state, action) => {
+        state.status = SUCCESS;
+        state.items = action.payload;
+      })
+      .addCase(addItemToCart.rejected, (state, action) => {
+        state.status = FAILED;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { toggleCart, addItemToCart } = cartSlice.actions;
+export const { toggleCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import _ from './Card.module.scss';
-import { addItemToCart } from '../../store/cartSlice';
 import { useState } from 'react';
+import { addItemToCart } from '../../store/cartSlice';
 
 export const Card = ({
   className = '',
@@ -17,11 +17,8 @@ export const Card = ({
 
   const handlerAddToCart = () => {
     dispatch(addItemToCart({
-      id,
-      img,
-      title,
-      dateDelivery,
-      price,
+      productId: id,
+      quantity: 1
     }));
   };
 
