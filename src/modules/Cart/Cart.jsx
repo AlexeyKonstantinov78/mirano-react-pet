@@ -26,8 +26,6 @@ export const Cart = () => {
     dispatch(openModal());
   };
 
-
-
   return (
     isOpenCart && (
       <section className={_.cart + ' ' + _.cart_open} ref={cartRef}>

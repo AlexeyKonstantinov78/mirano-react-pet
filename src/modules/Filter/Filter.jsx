@@ -17,6 +17,8 @@ export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const filters = useSelector(state => state.filters);
+  const searchRef = useRef();
+  const items = useSelector(state => state.goods.items);
 
   const prevFiltersRef = useRef(filters);
 
@@ -42,6 +44,10 @@ export const Filter = () => {
     }
   }, [dispatch, debounceFetchGoods, filters]);
 
+  useEffect(() => {
+    searchRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [items]);
+
   //handle
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
@@ -65,7 +71,7 @@ export const Filter = () => {
   }
 
   return (
-    <section className={_.filter}>
+    <section className={_.filter} ref={searchRef}>
       <h2 className='visually-hidden'></h2>
       <div className='container'>
         <form className={_.filter__form}>

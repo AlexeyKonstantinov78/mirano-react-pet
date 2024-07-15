@@ -13,7 +13,7 @@ export const Goods = () => {
   } = useSelector(state => state.goods);
 
   return (
-    <section className={_.goods}>
+    <section className={_.goods} >
       <div className={`container ${_.goods__container}`}>
         <div className={_.goods__box}>
           <h2 className={_.goods__title}>{name}</h2>
