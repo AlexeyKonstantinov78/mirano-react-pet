@@ -8,6 +8,7 @@ const initialState = {
   status: 'idle',
   accessKey: null,
   error: null,
+  totalCartPrice: 0,
 };
 
 export const registerCart = createAsyncThunk(
@@ -95,6 +96,7 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = SUCCESS;
         state.items = action.payload;
+        state.totalCartPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = FAILED;
@@ -105,8 +107,10 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(addItemToCart.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.status = SUCCESS;
         state.items = action.payload;
+        state.totalCartPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = FAILED;

@@ -1,7 +1,7 @@
 import { API_URL_RENDER } from '../../const';
 import _ from './CartItem.module.scss';
 
-export const CartItem = ({ id, name, price, photoUrl, quantity }) => (
+export const CartItem = ({ name, price, photoUrl, quantity }) => (
   <li className={_.cart__item}>
     <img className={_.cart__img} src={API_URL_RENDER + photoUrl} alt={name} />
     <h4 className={_['cart__item-title']}>{name}</h4>

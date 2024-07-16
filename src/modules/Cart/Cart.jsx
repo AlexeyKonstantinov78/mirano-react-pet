@@ -9,6 +9,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const isOpenCart = useSelector((state) => state.cart.isOpen);
   const items = useSelector((state) => state.cart.items);
+  const cartTotalPrice = useSelector((state) => state.cart.totalCartPrice);
 
   const cartRef = useRef(null);
 
@@ -73,7 +74,7 @@ export const Cart = () => {
               Оформить
             </button>
             <p className={_.cart__price + ' ' + _.cart__price_total}>
-              0&nbsp;₽
+              {cartTotalPrice}&nbsp;₽
             </p>
           </div>
         </div>
