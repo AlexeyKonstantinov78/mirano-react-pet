@@ -58,7 +58,7 @@ export const Header = () => {
         />
 
         <button className={_.header__cartButton} onClick={heandlerCartToggle}>
-          {itemsCart.length}
+          {itemsCart.reduce((acc, item) => item.quantity + acc, 0)}
         </button>
       </div>
     </header>
