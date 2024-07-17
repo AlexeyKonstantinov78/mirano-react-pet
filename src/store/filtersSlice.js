@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TITLE_FILTER_PRICES } from '../const';
 
 const initialState = {
   type: '',
@@ -33,10 +32,14 @@ const filtersSlice = createSlice({
       state.minPrice = '';
       state.maxPrice = '';
       state.category = '';
+    },
+    changeCategory(state, action) {
+      state.category = action.payload.category;
+      state.name = action.payload.name;
     }
   },
 });
 
-export const { setFiltersSlice, changeType, changePrice, closeFilters, closeIsSearch } = filtersSlice.actions;
+export const { setFiltersSlice, changeType, changePrice, closeFilters, closeIsSearch, changeCategory } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

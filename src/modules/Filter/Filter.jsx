@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoods } from '../../store/goodsSlice';
 import { debounce, getValidFilters } from '../../utils';
-import { changePrice, changeType } from '../../store/filtersSlice';
+import { changeCategory, changePrice, changeType } from '../../store/filtersSlice';
 import { FilterRadio } from './FilterRadio/FilterRadio';
 
 const filterTypes = [
@@ -16,9 +16,9 @@ const filterTypes = [
 export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
-  const filters = useSelector(state => state.filters);
+  const filters = useSelector((state) => state.filters);
   const searchRef = useRef(null);
-  const items = useSelector(state => state.goods.items);
+  const { items, categories } = useSelector((state) => state.goods);
 
   const prevFiltersRef = useRef(filters);
 
@@ -27,7 +27,8 @@ export const Filter = () => {
       if (!filters.isSearch) {
         dispatch(fetchGoods(filters));
       }
-    }, 300)).current;
+    }, 300)
+  ).current;
 
   useEffect(() => {
     const prevFilters = prevFiltersRef.current;
@@ -60,7 +61,7 @@ export const Filter = () => {
 
     dispatch(changeType({ [name]: value, name: title }));
     setOpenChoice(-1);
-  }
+  };
 
   const handlePriceChange = ({ target }) => {
     const { value, name } = target;
@@ -69,7 +70,22 @@ export const Filter = () => {
     if (filters.type) {
       dispatch(changePrice({ name, value }));
     }
-  }
+  };
+
+  const handleCategoryChange = (category) => {
+    if (category != '') {
+      dispatch(changeCategory({ category: category, name: `Категория: "${category}"` }));
+    } else {
+      let title = '';
+      filterTypes.forEach(type => {
+        if (type.value === filters.type) {
+          title = type.title;
+        }
+      });
+      dispatch(changeCategory({ category: category, name: title }));
+    }
+    setOpenChoice(-1);
+  };
 
   return (
     <section className={_.filter} ref={searchRef}>
@@ -115,42 +131,41 @@ export const Filter = () => {
               </div>
             </Choices>
 
-            <Choices
-              btnLabel='Тип товара'
-              className={_.filter__choice_type}
-              type='typeProduct'
-              isOpen={openChoice === 1}
-              onToggle={() => handleChoicesToggle(1)}>
-              <div className={_.filter__choicesBox}>
-                <ul className={_.filter__typeList}>
-                  <li className={_.filter__typeItem}>
-                    <button className={_.filter__typeButton} type='button'>
-                      Монобукеты
-                    </button>
-                  </li>
-                  <li className={_.filter__typeItem}>
-                    <button className={_.filter__typeButton} type='button'>
-                      Авторские букеты
-                    </button>
-                  </li>
-                  <li className={_.filter__typeItem}>
-                    <button className={_.filter__typeButton} type='button'>
-                      Цветы в коробке
-                    </button>
-                  </li>
-                  <li className={_.filter__typeItem}>
-                    <button className={_.filter__typeButton} type='button'>
-                      Цветы в корзине
-                    </button>
-                  </li>
-                  <li className={_.filter__typeItem}>
-                    <button className={_.filter__typeButton} type='button'>
-                      Букеты из сухоцветов
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </Choices>
+            {(categories.length > 0 && filters.type != '') && (
+              <Choices
+                btnLabel='Тип товара'
+                className={_.filter__choice_type}
+                type='typeProduct'
+                isOpen={openChoice === 1}
+                onToggle={() => handleChoicesToggle(1)}>
+                <div className={_.filter__choicesBox}>
+                  <ul className={_.filter__typeList}>
+                    <li className={_.filter__typeItem}>
+                      <button
+                        className={_.filter__typeButton}
+                        type='button'
+                        onClick={() => {
+                          handleCategoryChange('');
+                        }}>
+                        Все товары
+                      </button>
+                    </li>
+                    {categories.map((category) => (
+                      <li key={category} className={_.filter__typeItem}>
+                        <button
+                          className={_.filter__typeButton}
+                          type='button'
+                          onClick={() => {
+                            handleCategoryChange(category);
+                          }}>
+                          {category}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Choices>
+            )}
           </fieldset>
         </form>
       </div>
