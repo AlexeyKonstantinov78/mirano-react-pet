@@ -17,7 +17,7 @@ export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const filters = useSelector(state => state.filters);
-  const searchRef = useRef();
+  const searchRef = useRef(null);
   const items = useSelector(state => state.goods.items);
 
   const prevFiltersRef = useRef(filters);
