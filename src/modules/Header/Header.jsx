@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import _ from './Header.module.scss';
 import { toggleCart } from '../../store/cartSlice';
-import { useState } from 'react';
 import { fetchGoods } from '../../store/goodsSlice';
 import { TITLE_SEARCH } from '../../const';
 import { closeFilters } from '../../store/filtersSlice';
+import { changeSearchValue } from '../../store/searchSlice';
 
 export const Header = () => {
   const dispatch = useDispatch();
   const itemsCart = useSelector((state) => state.cart.items);
-  const [searchValue, setSearchValue] = useState('');
+  const searchValue = useSelector(state => state.search.value);
 
   const heandlerCartToggle = () => {
     dispatch(toggleCart());
@@ -20,7 +20,7 @@ export const Header = () => {
     if (searchValue.trim().length === 0) return;
     dispatch(fetchGoods({ search: searchValue, name: `${TITLE_SEARCH} "${searchValue}"` }));
     dispatch(closeFilters());
-    setSearchValue('');
+    dispatch(changeSearchValue(""));
   }
 
   return (
@@ -33,7 +33,7 @@ export const Header = () => {
             name='search'
             placeholder='Букет из роз'
             value={searchValue}
-            onChange={(e) => { setSearchValue(e.target.value) }}
+            onChange={(e) => { dispatch(changeSearchValue(e.target.value)) }}
           />
 
           <button className={_.header__searchButton} aria-label='начать поиск'>

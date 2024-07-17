@@ -32,6 +32,7 @@ export const Filter = () => {
   useEffect(() => {
     const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters);
+
     if (prevFilters.type !== filters.type && !filters.isSearch) {
       dispatch(fetchGoods(validFilters));
     } else {
