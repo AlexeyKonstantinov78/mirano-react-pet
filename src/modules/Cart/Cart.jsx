@@ -70,7 +70,7 @@ export const Cart = () => {
           </ul>
 
           <div className={_.cart__footer}>
-            <button className={_.cart__orderBtn} onClick={handlerOpenOrder}>
+            <button className={_.cart__orderBtn} onClick={handlerOpenOrder} disabled={!items.length}>
               Оформить
             </button>
             <p className={_.cart__price + ' ' + _.cart__price_total}>
