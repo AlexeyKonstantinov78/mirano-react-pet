@@ -3,13 +3,14 @@ import _ from './Header.module.scss';
 import { toggleCart } from '../../store/cartSlice';
 import { fetchGoods } from '../../store/goodsSlice';
 import { TITLE_SEARCH } from '../../const';
-import { closeFilters } from '../../store/filtersSlice';
+import { changeFiltersIsSearch, closeFilters } from '../../store/filtersSlice';
 import { changeSearchValue } from '../../store/searchSlice';
 
 export const Header = () => {
   const dispatch = useDispatch();
   const itemsCart = useSelector((state) => state.cart.items);
   const searchValue = useSelector(state => state.search.value);
+
 
   const heandlerCartToggle = () => {
     dispatch(toggleCart());

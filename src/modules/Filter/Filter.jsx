@@ -47,8 +47,10 @@ export const Filter = () => {
   }, [dispatch, debounceFetchGoods, filters]);
 
   useEffect(() => {
-    searchRef.current.scrollIntoView({ behavior: 'smooth' });
-  }, [items]);
+    if (filters.isSearch) {
+      searchRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [filters.isSearch, items]);
 
   //handle
   const handleChoicesToggle = (index) => {

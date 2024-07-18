@@ -36,10 +36,13 @@ const filtersSlice = createSlice({
     changeCategory(state, action) {
       state.category = action.payload.category;
       state.name = action.payload.name;
+    },
+    changeFiltersIsSearch(state) {
+      state.isSearch = false;
     }
   },
 });
 
-export const { setFiltersSlice, changeType, changePrice, closeFilters, closeIsSearch, changeCategory } = filtersSlice.actions;
+export const { setFiltersSlice, changeType, changePrice, closeFilters, closeIsSearch, changeCategory, changeFiltersIsSearch } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
