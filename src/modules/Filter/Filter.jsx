@@ -153,7 +153,7 @@ export const Filter = () => {
                     {categories.map((category) => (
                       <li key={category} className={_.filter__typeItem}>
                         <button
-                          className={_.filter__typeButton}
+                          className={_.filter__typeButton + ' ' + `${category === filters.category ? _.filter__typeButton_active : ''}`}
                           type='button'
                           onClick={() => {
                             handleCategoryChange(category);
