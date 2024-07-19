@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem';
 import _ from './Cart.module.scss';
-import { toggleCart } from '../../store/cartSlice';
-import { openModal } from '../../store/orderSlice';
+import { toggleCart } from '../../store/slices/cartSlice';
+import { openModal } from '../../store/slices/orderSlice';
 import { useEffect, useRef } from 'react';
 
 export const Cart = () => {

@@ -7,7 +7,8 @@ import { Hero } from './modules/Hero/Hero';
 import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
 import { useDispatch } from 'react-redux';
-import { fetchCart, registerCart } from './store/cartSlice';
+import { registerCart } from './store/thunks/registerCart';
+import { fetchCart } from './store/thunks/fetchCart';
 
 export const App = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL_RENDER, TEXT_ERROR } from '../const';
-import { fetchCart, toggleCart } from './cartSlice';
+import { createSlice } from "@reduxjs/toolkit";
+import { FAILED, LOADING, SUCCESS } from '../../const';
+import { sendOrder } from '../thunks/sendOrder';
 
 const initialState = {
   isOpen: false,
   orderId: '',
+  status: 'idle',
   data: {
     buyerName: '',
     buyerPhone: '',
@@ -19,61 +20,6 @@ const initialState = {
   },
   error: null,
 };
-
-export const sendOrder = createAsyncThunk(
-  'order/sendOrder',
-  async (_, { getState, dispatch }) => {
-    const {
-      order: {
-        data: {
-          buyerName,
-          buyerPhone,
-          recipientName,
-          recipientPhone,
-          street,
-          house,
-          apartment,
-          paymentOnline,
-          deliveryDate,
-          deliveryTime,
-        }
-      }
-    } = getState();
-    const orderData = {
-      "buyer": {
-        "name": buyerName,
-        "phone": buyerPhone,
-      },
-      "recipient": {
-        "name": recipientName,
-        "phone": recipientPhone,
-      },
-      "address": `${street}, ${house}, ${apartment}`,
-      paymentOnline,
-      deliveryDate,
-      deliveryTime,
-    };
-
-    const response = await fetch(`${API_URL_RENDER}/api/orders`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(orderData),
-    });
-
-    if (!response.ok) {
-      throw new Error(TEXT_ERROR);
-    }
-
-    dispatch(clearOrder());
-    dispatch(toggleCart());
-    dispatch(fetchCart());
-
-    return await response.json();
-  }
-);
 
 const orderSlice = createSlice({
   name: 'order',
@@ -102,6 +48,9 @@ const orderSlice = createSlice({
         deliveryTime: '',
       };
       state.orderId = '';
+      // state.isOpen = false;
+      // state.status = 'idle';
+      // state.error = null;
     },
     updateOrderData(state, action) {
       // state.data[action.payload.name] = action.payload.value;
@@ -113,14 +62,16 @@ const orderSlice = createSlice({
       .addCase(sendOrder.pending, (state) => {
         state.orderId = '';
         state.error = null;
+        state.status = LOADING;
       })
       .addCase(sendOrder.fulfilled, (state, action) => {
-        console.log(action);
         state.orderId = action.payload.orderId;
+        state.status = SUCCESS;
       })
       .addCase(sendOrder.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
         state.orderId = '';
+        state.status = FAILED;
       });
   },
 });

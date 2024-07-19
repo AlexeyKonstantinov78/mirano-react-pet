@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import _ from './Card.module.scss';
 import { useState } from 'react';
-import { addItemToCart } from '../../store/cartSlice';
+import { addItemToCart } from '../../store/thunks/addItemToCart';
 
 export const Card = ({
   className = '',

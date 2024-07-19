@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { API_URL_RENDER, FAILED, LOADING, SUCCESS, TEXT_ERROR } from '../const';
+import { createSlice } from '@reduxjs/toolkit';
+import { FAILED, LOADING, SUCCESS } from '../../const';
+import { fetchGoods } from '../thunks/fetchGoods';
 
 const initialState = {
   items: [],
@@ -9,22 +10,6 @@ const initialState = {
   content: null,
   categories: [],
 };
-
-export const fetchGoods = createAsyncThunk(
-  'goods/featchGoods',
-  async (params) => {
-
-    const queryString = new URLSearchParams(params).toString();
-
-    const response = await fetch(`${API_URL_RENDER}/api/products${queryString ? `?${queryString}` : ''}`);
-
-    if (!response.ok) {
-      throw new Error(TEXT_ERROR);
-    }
-
-    return await response.json();
-  }
-);
 
 const goodsSlice = createSlice({
   name: 'goods',

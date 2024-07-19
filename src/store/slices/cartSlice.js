@@ -1,70 +1,17 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API_URL_RENDER, FAILED, LOADING, SUCCESS, TEXT_ERROR, TEXT_ERROR_OUTPUT_ITEMS } from '../const';
+import { createSlice } from "@reduxjs/toolkit";
+import { FAILED, LOADING, SUCCESS } from '../../const';
+import { registerCart } from '../thunks/registerCart';
+import { fetchCart } from '../thunks/fetchCart';
+import { addItemToCart } from '../thunks/addItemToCart';
 
 const initialState = {
   isOpen: false,
-  // items: JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE) || '[]'),
   items: [],
   status: 'idle',
   accessKey: null,
   error: null,
   totalCartPrice: 0,
 };
-
-export const registerCart = createAsyncThunk(
-  'cart/registerCart',
-  async () => {
-    const response = await fetch(`${API_URL_RENDER}/api/cart/register`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error(TEXT_ERROR);
-    }
-
-    return await response.json();
-  });
-
-export const fetchCart = createAsyncThunk(
-  'cart/fetchCart',
-  async (_, { getState }) => {
-    // const accessKey = getState().cart.accessKey;
-    // console.log(accessKey);
-
-    const response = await fetch(`${API_URL_RENDER}/api/cart`, {
-      method: 'GET',
-      credentials: "include",
-    });
-
-    if (!response.ok) {
-      throw new Error(TEXT_ERROR);
-    }
-
-    return await response.json();
-  }
-);
-
-export const addItemToCart = createAsyncThunk(
-  'cart/addItemToCart',
-  async ({ productId, quantity }) => {
-
-    const response = await fetch(`${API_URL_RENDER}/api/cart/items`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ productId, quantity })
-    });
-
-    if (!response.ok) {
-      throw new Error(TEXT_ERROR_OUTPUT_ITEMS);
-    }
-    return await response.json();
-  }
-);
-
 
 const cartSlice = createSlice({
   name: 'cart',

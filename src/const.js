@@ -11,3 +11,4 @@ export const TITLE_SEARCH = 'Поиск';
 
 export const TEXT_ERROR = 'Не удалось получить данные';
 export const TEXT_ERROR_OUTPUT_ITEMS = 'Не удалось отправить товар в корзину';
+export const TEXT_ERROR_OUTPUT_ORDER = 'Не удалось оформить заказ попробуйте позже';

@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import _ from './Header.module.scss';
-import { toggleCart } from '../../store/cartSlice';
-import { fetchGoods } from '../../store/goodsSlice';
 import { TITLE_SEARCH } from '../../const';
-import { changeFiltersIsSearch, closeFilters } from '../../store/filtersSlice';
-import { changeSearchValue } from '../../store/searchSlice';
+import { toggleCart } from '../../store/slices/cartSlice';
+import { fetchGoods } from '../../store/thunks/fetchGoods';
+import { closeFilters } from '../../store/slices/filtersSlice';
+import { changeSearchValue } from '../../store/slices/searchSlice';
+
 
 export const Header = () => {
   const dispatch = useDispatch();

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import _ from './Order.module.scss';
-import { closeModal, sendOrder, updateOrderData } from '../../store/orderSlice';
 import { useCallback, useEffect } from 'react';
+import { closeModal, updateOrderData } from '../../store/slices/orderSlice';
+import { sendOrder } from '../../store/thunks/sendOrder';
 
 export const Order = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export const Order = () => {
                     placeholder='Имя'
                     value={data.buyerName}
                     onChange={handleChange}
+                    required
                   />
                   <input
                     className={_.order__input}
@@ -78,6 +80,7 @@ export const Order = () => {
                     placeholder='Телефон'
                     value={data.buyerPhone}
                     onChange={handleChange}
+                    required
                   />
                 </div>
               </fieldset>
@@ -91,6 +94,7 @@ export const Order = () => {
                     placeholder='Имя'
                     value={data.recipientName}
                     onChange={handleChange}
+                    required
                   />
                   <input
                     className={_.order__input}
@@ -99,6 +103,7 @@ export const Order = () => {
                     placeholder='Телефон'
                     value={data.recipientPhone}
                     onChange={handleChange}
+                    required
                   />
                 </div>
               </fieldset>
@@ -112,6 +117,7 @@ export const Order = () => {
                     placeholder='Улица'
                     value={data.street}
                     onChange={handleChange}
+                    required
                   />
                   <input
                     className={_.order__input + ' ' + _.order__input_min}
@@ -120,6 +126,7 @@ export const Order = () => {
                     placeholder='Дом'
                     value={data.house}
                     onChange={handleChange}
+                    required
                   />
                   <input
                     className={_.order__input + ' ' + _.order__input_min}
@@ -128,6 +135,7 @@ export const Order = () => {
                     placeholder='Квартира'
                     value={data.apartment}
                     onChange={handleChange}
+                    required
                   />
                 </div>
               </fieldset>
@@ -141,17 +149,20 @@ export const Order = () => {
                       value={data.paymentOnline === 'true'}
                       defaultChecked
                       onChange={handleChange}
+                      required
                     />
                     Оплата онлайн
                   </label>
                 </div>
                 <div className={_.order__delivery}>
-                  <label htmlFor='delivery'>Доставка 01.07</label>
+                  <label htmlFor='delivery'>Дата доставки </label>
                   <input
-                    type='hidden'
+                    type='date'
+                    className={_.order__input}
                     name='deliveryDate'
                     value={data.deliveryDate}
                     onChange={handleChange}
+                    required
                   />
                   <div className={_.order__selectWrapper}>
                     <select
@@ -159,7 +170,9 @@ export const Order = () => {
                       name='deliveryTime'
                       id='delivery'
                       value={data.deliveryTime}
-                      onChange={handleChange}>
+                      onChange={handleChange}
+                      required
+                    >
                       <option value='9-12'>с 9:00 до 12:00</option>
                       <option value='12-15'>с 12:00 до 15:00</option>
                       <option value='15-18'>с 15:00 до 18:00</option>

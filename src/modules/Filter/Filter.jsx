@@ -2,10 +2,12 @@ import _ from './Filter.module.scss';
 import { Choices } from '../Choices/Choices';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGoods } from '../../store/goodsSlice';
+
 import { debounce, getValidFilters } from '../../utils';
-import { changeCategory, changePrice, changeType } from '../../store/filtersSlice';
+
 import { FilterRadio } from './FilterRadio/FilterRadio';
+import { fetchGoods } from '../../store/thunks/fetchGoods';
+import { changeCategory, changePrice, changeType } from '../../store/slices/filtersSlice';
 
 const filterTypes = [
   { value: 'bouquets', title: 'Цветы' },
