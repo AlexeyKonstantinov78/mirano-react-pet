@@ -7,7 +7,7 @@ import { addItemToCart } from '../../store/thunks/addItemToCart';
 
 export const CartItem = ({ id, name, price, photoUrl, quantity }) => {
   const dispatch = useDispatch();
-  const [inputQuantity, setInputQuantity] = useState(quantity);
+  //const [inputQuantity, setInputQuantity] = useState(quantity);
 
   const debounceInputChange = debounce((newQuantity) => {
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
@@ -15,19 +15,19 @@ export const CartItem = ({ id, name, price, photoUrl, quantity }) => {
 
   const handleInputChange = (e) => {
     const newQuantity = !isNaN(parseInt(e.target.value)) ? parseInt(e.target.value) : '';
-    setInputQuantity(newQuantity);
+    // setInputQuantity(newQuantity);
     debounceInputChange(newQuantity)
   };
 
   const handleDecrement = () => {
-    const newQuantity = inputQuantity - 1;
-    setInputQuantity(newQuantity);
+    const newQuantity = quantity - 1;
+    // setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
   const handleIncrement = () => {
-    const newQuantity = inputQuantity + 1;
-    setInputQuantity(newQuantity);
+    const newQuantity = quantity + 1;
+    // setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
@@ -44,14 +44,14 @@ export const CartItem = ({ id, name, price, photoUrl, quantity }) => {
           type='number'
           max='99'
           min='0'
-          value={inputQuantity}
+          value={quantity}
           onChange={handleInputChange}
         />
         <button className={_['cart__counter-btn']}
           onClick={handleIncrement}
         >+</button>
       </div>
-      <p className={_.cart__price}>{price * inputQuantity}&nbsp;₽</p>
+      <p className={_.cart__price}>{price * quantity}&nbsp;₽</p>
     </li>
   );
 };

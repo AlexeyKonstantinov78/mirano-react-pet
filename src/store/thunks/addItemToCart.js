@@ -8,7 +8,7 @@ export const addItemToCart = createAsyncThunk(
       const state = getState();
       const cartItems = state.cart.items;
 
-      if (isNaN(parseInt(cartItems))) {
+      if (isNaN(parseInt(quantity))) {
         const cartItem = cartItems.find(item => item.id === productId);
         quantity = cartItem ? cartItem.quantity + 1 : 1;
       }
