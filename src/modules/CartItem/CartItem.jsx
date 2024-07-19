@@ -1,13 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { API_URL_RENDER } from '../../const';
 import _ from './CartItem.module.scss';
-import { useState } from 'react';
 import { debounce } from '../../utils';
 import { addItemToCart } from '../../store/thunks/addItemToCart';
 
 export const CartItem = ({ id, name, price, photoUrl, quantity }) => {
   const dispatch = useDispatch();
-  //const [inputQuantity, setInputQuantity] = useState(quantity);
 
   const debounceInputChange = debounce((newQuantity) => {
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
@@ -15,19 +13,16 @@ export const CartItem = ({ id, name, price, photoUrl, quantity }) => {
 
   const handleInputChange = (e) => {
     const newQuantity = !isNaN(parseInt(e.target.value)) ? parseInt(e.target.value) : '';
-    // setInputQuantity(newQuantity);
     debounceInputChange(newQuantity)
   };
 
   const handleDecrement = () => {
     const newQuantity = quantity - 1;
-    // setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
   const handleIncrement = () => {
     const newQuantity = quantity + 1;
-    // setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
