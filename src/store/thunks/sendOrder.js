@@ -21,7 +21,7 @@ export const sendOrder = createAsyncThunk(
             paymentOnline,
             deliveryDate,
             deliveryTime,
-          }
+          },
         }
       } = getState();
 

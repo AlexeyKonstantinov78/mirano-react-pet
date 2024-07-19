@@ -47,7 +47,6 @@ const orderSlice = createSlice({
         deliveryDate: '',
         deliveryTime: '',
       };
-      state.orderId = '';
       // state.isOpen = false;
       // state.status = 'idle';
       // state.error = null;
@@ -56,6 +55,9 @@ const orderSlice = createSlice({
       // state.data[action.payload.name] = action.payload.value;
       state.data = { ...state.data, ...action.payload };
     },
+    clearOrderId(state) {
+      state.orderId = '';
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -76,6 +78,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const { toggleOrder, openModal, closeModal, clearOrder, updateOrderData } = orderSlice.actions;
+export const { toggleOrder, openModal, closeModal, clearOrder, updateOrderData, clearOrderId } = orderSlice.actions;
 
 export default orderSlice.reducer;

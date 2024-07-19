@@ -1,7 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import _ from './Card.module.scss';
 import { useState } from 'react';
 import { addItemToCart } from '../../store/thunks/addItemToCart';
+import { openCart } from '../../store/slices/cartSlice';
 
 export const Card = ({
   className = '',
@@ -12,14 +13,18 @@ export const Card = ({
   price,
 }) => {
   const dispatch = useDispatch();
+  const isOpenCart = useSelector(state => state.cart.isOpen);
+
 
   const [hover, setHover] = useState(true);
 
   const handlerAddToCart = () => {
     dispatch(addItemToCart({
-      productId: id,
-      quantity: 1
+      productId: id
     }));
+    if (!isOpenCart) {
+      dispatch(openCart());
+    }
   };
 
   return (

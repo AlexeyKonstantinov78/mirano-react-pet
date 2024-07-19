@@ -17,6 +17,12 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    openCart(state) {
+      state.isOpen = true;
+    },
+    closeCart(state) {
+      state.isOpen = false;
+    },
     toggleCart(state) {
       state.isOpen = !state.isOpen;
     },
@@ -34,7 +40,7 @@ const cartSlice = createSlice({
       .addCase(registerCart.rejected, (state, action) => {
         state.status = FAILED;
         state.accessKey = '';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(fetchCart.pending, (state) => {
         state.status = LOADING;
@@ -47,7 +53,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = FAILED;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(addItemToCart.pending, (state) => {
         state.status = LOADING;
@@ -60,12 +66,12 @@ const cartSlice = createSlice({
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = FAILED;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   },
 });
 
-export const { toggleCart } = cartSlice.actions;
+export const { toggleCart, openCart, closeCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
