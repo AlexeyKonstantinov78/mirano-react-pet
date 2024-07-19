@@ -3,7 +3,6 @@ import _ from './Card.module.scss';
 import { useState } from 'react';
 import { addItemToCart } from '../../store/thunks/addItemToCart';
 import { openCart } from '../../store/slices/cartSlice';
-import { fetchCart } from '../../store/thunks/fetchCart';
 
 export const Card = ({
   className = '',
@@ -26,7 +25,6 @@ export const Card = ({
     if (!isOpenCart) {
       dispatch(openCart());
     }
-    // dispatch(fetchCart());
   };
 
   return (
