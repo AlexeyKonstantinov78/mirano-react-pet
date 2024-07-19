@@ -106,7 +106,7 @@ export const Filter = () => {
           </fieldset>
 
           <fieldset className={_.filter__group + ' ' + _.filter__group_choices}>
-            <Choices
+            {filters.type && <Choices
               btnLabel='Цена'
               type='prise'
               isOpen={openChoice === 0}
@@ -131,7 +131,7 @@ export const Filter = () => {
                   />
                 </fieldset>
               </div>
-            </Choices>
+            </Choices>}
 
             {(categories.length > 0 && filters.type != '') && (
               <Choices
